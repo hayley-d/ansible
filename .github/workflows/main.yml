@@ -42,7 +42,7 @@ jobs:
         run: |
           for file in ./tasks/*.yml; do
             echo "Linting $file..."
-            ansible-lint $file || exit 1
+            ansible-lint -v $file
           done
 
        # Step 6: Test task files (Dry Run) with `zsh-setup.yml` first
