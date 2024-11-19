@@ -32,7 +32,7 @@ jobs:
      # Step 4: Validate YAML syntax for all task files
       - name: Validate YAML syntax
         run: |
-          for file in ansible/tasks/*.yml; do
+          for file in ./tasks/*.yml; do
             echo "Validating $file..."
             ansible-playbook --syntax-check $file || exit 1
           done
