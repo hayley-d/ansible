@@ -1,3 +1,13 @@
+---
+- name: Setup System for Zsh and Essential Configuration
+  hosts: localhost
+  become: yes
+  tasks:
+    # Ensure the system is updated
+    - name: Update apt cache and upgrade the system
+      apt:
+        update_cache: yes
+
     # Install zsh
     - name: Install Zsh
       apt:
@@ -6,7 +16,7 @@
         update_cache: yes
 
     - name: Change default shell to Zsh
-      shell: chsh -s $(which zsh) "{{ ansible_user }}"
+      shell: chsh -s $(which zsh)
       args:
         executable: /bin/bash  # Ensure the shell used for the command is compatible
       changed_when: false  # Avoid false positives since `chsh` may not change the shell if it's already set
@@ -41,3 +51,5 @@
         curl -fLo "FiraCode Nerd Font.ttf" https://github.com/ryanoasis/nerd-fonts/releases/latest/download/FiraCode.zip
         unzip FiraCode.zip
         fc-cache -fv
+      args:
+        creates: "~/.local/share/fonts/FiraCode Nerd Font.ttf"  # Skip if already downloaded
