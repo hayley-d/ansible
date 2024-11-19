@@ -1,10 +1,10 @@
 - name: Setup Docker
   hosts: all
-  become: yes
+  become: true
   tasks:
     - name: Update APT package index
       apt:
-        update_cache: yes
+        update_cache: true
     - name: Install prerequisite packages
       apt:
         name:
@@ -21,7 +21,7 @@
       apt_repository:
         repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable
         state: present
-        update_cache: yes
+        update_cache: true
     - name: Install Docker CE
       apt:
         name:
@@ -33,12 +33,12 @@
       service:
         name: docker
         state: started
-        enabled: yes
+        enabled: true
     - name: Add current user to Docker group
       user:
         name: "{{ ansible_user_id }}"
         groups: docker
-        append: yes
+        append: true
     - name: Verify Docker installation
       shell: docker --version
       register: docker_version

@@ -1,6 +1,6 @@
 - name: Install and configure programming languages (Rust, Java, C++, C, NASM, Go, Zig)
   hosts: localhost
-  become: yes
+  become: true
   tasks:
     # Install dependencies for all programming languages
     - name: Install required dependencies
@@ -56,7 +56,7 @@
       ansible.builtin.lineinfile:
         path: "/home/hayley/.zshrc"
         line: 'export PATH=$PATH:/usr/local/go/bin:/usr/local/zig:/home/hayley/.cargo/bin'
-        create: yes
+        create: true
         state: present
     # Reload Zsh configuration to apply the changes
     - name: Reload Zsh configuration

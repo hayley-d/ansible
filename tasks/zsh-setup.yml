@@ -1,17 +1,17 @@
 - name: Setup System for Zsh and Essential Configuration
   hosts: localhost
-  become: yes
+  become: true
   tasks:
     # Ensure the system is updated
     - name: Update apt cache and upgrade the system
       apt:
-        update_cache: yes
+        update_cache: true
     # Install zsh
     - name: Install Zsh
       apt:
         name: zsh
         state: present
-        update_cache: yes
+        update_cache: true
     - name: Change default shell to Zsh
       shell: chsh -s $(which zsh)
       args:
@@ -29,13 +29,13 @@
       ansible.builtin.git:
         repo: 'https://github.com/zsh-users/zsh-autosuggestions.git'
         dest: "~/.oh-my-zsh/plugins/zsh-autosuggestions"
-        update: yes
+        update: true
     - name: Update .zshrc to include autosuggestions
       lineinfile:
         path: ~/.zshrc
         regexp: '^plugins='
         line: "plugins=(git zsh-autosuggestions)"
-        backrefs: yes
+        backrefs: true
     # Install Nerd Fonts
     - name: Download and install Nerd Fonts
       shell: |

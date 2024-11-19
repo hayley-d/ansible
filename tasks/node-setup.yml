@@ -1,6 +1,6 @@
 - name: Install NVM and the latest Node.js and npm using NVM
   hosts: localhost
-  become: yes
+  become: true
   tasks:
     # Install required dependencies for NVM
     - name: Install dependencies for NVM
