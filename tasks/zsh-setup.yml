@@ -1,4 +1,3 @@
----
 - name: Setup System for Zsh and Essential Configuration
   hosts: localhost
   become: yes
@@ -7,20 +6,17 @@
     - name: Update apt cache and upgrade the system
       apt:
         update_cache: yes
-
     # Install zsh
     - name: Install Zsh
       apt:
         name: zsh
         state: present
         update_cache: yes
-
     - name: Change default shell to Zsh
       shell: chsh -s $(which zsh)
       args:
         executable: /bin/bash  # Ensure the shell used for the command is compatible
       changed_when: false  # Avoid false positives since `chsh` may not change the shell if it's already set
-
     - name: Install Oh My Zsh
       shell: |
         curl -Lo install.sh https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh
@@ -29,20 +25,17 @@
         creates: ~/.oh-my-zsh  # Skip if already installed
       environment:
         ZSH: "~/.oh-my-zsh"
-
     - name: Install Zsh plugin for auto-complete
       ansible.builtin.git:
         repo: 'https://github.com/zsh-users/zsh-autosuggestions.git'
         dest: "~/.oh-my-zsh/plugins/zsh-autosuggestions"
         update: yes
-
     - name: Update .zshrc to include autosuggestions
       lineinfile:
         path: ~/.zshrc
         regexp: '^plugins='
         line: "plugins=(git zsh-autosuggestions)"
         backrefs: yes
-
     # Install Nerd Fonts
     - name: Download and install Nerd Fonts
       shell: |

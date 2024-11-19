@@ -1,32 +1,27 @@
-- name: Setup Docker 
+- name: Setup Docker
   hosts: all
   become: yes
-
   tasks:
     - name: Update APT package index
       apt:
         update_cache: yes
-
     - name: Install prerequisite packages
       apt:
-        name: 
+        name:
           - apt-transport-https
           - ca-certificates
           - curl
           - software-properties-common
         state: present
-
     - name: Add Docker GPG key
       apt_key:
         url: https://download.docker.com/linux/ubuntu/gpg
         state: present
-
     - name: Add Docker repository
       apt_repository:
         repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable
         state: present
         update_cache: yes
-
     - name: Install Docker CE
       apt:
         name:
@@ -34,23 +29,19 @@
           - docker-ce-cli
           - containerd.io
         state: present
-
     - name: Ensure Docker service is started and enabled
       service:
         name: docker
         state: started
         enabled: yes
-
     - name: Add current user to Docker group
       user:
         name: "{{ ansible_user_id }}"
         groups: docker
         append: yes
-
     - name: Verify Docker installation
       shell: docker --version
       register: docker_version
-
     - name: Print Docker version
       debug:
         msg: "Docker installed successfully: {{ docker_version.stdout }}"
