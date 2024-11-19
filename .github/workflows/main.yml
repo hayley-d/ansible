@@ -1,0 +1,66 @@
+name: Test Ansible Playbooks
+
+on:
+  push:
+    branches:
+      - main
+      - master
+  pull_request:
+
+jobs:
+  test-ansible-yamls:
+    name: Test YAML Configurations
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout the repository
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Set up Python for Ansible
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      # Step 3: Install Ansible and linting tools
+      - name: Install Ansible and ansible-lint
+        run: |
+          python -m pip install --upgrade pip
+          pip install ansible ansible-lint
+
+     # Step 4: Validate YAML syntax for all task files
+      - name: Validate YAML syntax
+        run: |
+          for file in ansible/tasks/*.yml; do
+            echo "Validating $file..."
+            ansible-playbook --syntax-check $file || exit 1
+          done
+
+      # Step 5: Lint task files
+      - name: Lint Ansible task files
+        run: |
+          for file in ansible/tasks/*.yml; do
+            echo "Linting $file..."
+            ansible-lint $file || exit 1
+          done
+
+       # Step 6: Test task files (Dry Run) with `zsh-setup.yml` first
+      - name: Test task files in a playbook context
+        run: |
+          echo '---' > test-playbook.yml
+          echo '- hosts: localhost' >> test-playbook.yml
+          echo '  tasks:' >> test-playbook.yml
+          
+          # Ensure zsh-setup.yml is first
+          echo "  - include_tasks: ansible/tasks/zsh-setup.yml" >> test-playbook.yml
+          
+          # Dynamically include other task files (excluding zsh-setup.yml)
+          for file in ansible/tasks/*.yml; do
+            if [ "$file" != "ansible/tasks/zsh-setup.yml" ]; then
+              echo "  - include_tasks: $file" >> test-playbook.yml
+            fi
+          done
+          
+          # Test the playbook
+          ansible-playbook test-playbook.yml --check
