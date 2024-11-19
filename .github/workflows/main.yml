@@ -40,7 +40,7 @@ jobs:
       # Step 5: Lint task files
       - name: Lint Ansible task files
         run: |
-          for file in ansible/tasks/*.yml; do
+          for file in ./tasks/*.yml; do
             echo "Linting $file..."
             ansible-lint $file || exit 1
           done
@@ -53,11 +53,11 @@ jobs:
           echo '  tasks:' >> test-playbook.yml
           
           # Ensure zsh-setup.yml is first
-          echo "  - include_tasks: ansible/tasks/zsh-setup.yml" >> test-playbook.yml
+          echo "  - include_tasks: ./tasks/zsh-setup.yml" >> test-playbook.yml
           
           # Dynamically include other task files (excluding zsh-setup.yml)
           for file in ansible/tasks/*.yml; do
-            if [ "$file" != "ansible/tasks/zsh-setup.yml" ]; then
+            if [ "$file" != "./tasks/zsh-setup.yml" ]; then
               echo "  - include_tasks: $file" >> test-playbook.yml
             fi
           done
