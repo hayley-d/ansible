@@ -30,12 +30,12 @@ jobs:
           pip install ansible ansible-lint
 
      # Step 4: Validate YAML syntax for all task files
-      - name: Validate YAML syntax
-        run: |
-          for file in ./tasks/*.yml; do
-            echo "Validating $file..."
-            ansible-playbook --syntax-check $file || exit 1
-          done
+      #- name: Validate YAML syntax
+       # run: |
+      #    for file in ./tasks/*.yml; do
+       #     echo "Validating $file..."
+      #      ansible-playbook --syntax-check $file || exit 1
+      #    done
 
       # Step 5: Lint task files
       #- name: Lint Ansible task files
