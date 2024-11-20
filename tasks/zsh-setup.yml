@@ -26,6 +26,10 @@
     repo: "https://github.com/zsh-users/zsh-autosuggestions.git"
     dest: "~/.oh-my-zsh/plugins/zsh-autosuggestions"
     update: true
+- name: Ensure .zshrc exists
+  file:
+    path: "~/.zshrc"
+    state: touch
 - name: Update .zshrc to include autosuggestions
   lineinfile:
     path: ~/.zshrc
