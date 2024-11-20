@@ -50,14 +50,14 @@
 # Modify ~/.zshrc to add environment variables for programming languages
 - name: Update ~/.zshrc with paths for Go, Zig, and Rust
   ansible.builtin.lineinfile:
-    path: "/home/hayley/.zshrc"
+    path: "{{ ansible_user_dir }}/.zshrc"
     line: "export PATH=$PATH:/usr/local/go/bin:/usr/local/zig:/home/hayley/.cargo/bin"
     create: true
     state: present
 # Reload Zsh configuration to apply the changes
 - name: Reload Zsh configuration
   ansible.builtin.shell: |
-    source /home/hayley/.zshrc
+    source {{ ansible_user_dir }}/.zshrc
   become_user: hayley
 # Verify Rust installation
 - name: Verify Rust version
