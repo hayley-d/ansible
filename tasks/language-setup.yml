@@ -1,83 +1,83 @@
 ---
-    # Install dependencies for all programming languages
-    - name: Install required dependencies
-      ansible.builtin.apt:
-        name:
-          - curl
-          - build-essential
-          - git
-          - openjdk-11-jdk
-          - nasm
-        state: present
-    # Install Rust using rustup
-    - name: Install Rust
-      ansible.builtin.shell: |
-        curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-      args:
-        creates: "/home/hayley/.cargo"
-    # Install Java (OpenJDK 11)
-    - name: Install Java (OpenJDK 11)
-      ansible.builtin.apt:
-        name: openjdk-11-jdk
-        state: present
-    # Install C and C++ compilers (GCC, G++)
-    - name: Install GCC and G++
-      ansible.builtin.apt:
-        name:
-          - gcc
-          - g++
-        state: present
-    # Install NASM assembler
-    - name: Install NASM
-      ansible.builtin.apt:
-        name: nasm
-        state: present
-    # Install Go programming language
-    - name: Install Go
-      ansible.builtin.shell: |
-        curl -OL https://golang.org/dl/go1.20.5.linux-amd64.tar.gz
-        tar -C /usr/local -xvzf go1.20.5.linux-amd64.tar.gz
-        rm go1.20.5.linux-amd64.tar.gz
-      args:
-        creates: "/usr/local/go"
-    # Install Zig programming language
-    - name: Install Zig
-      ansible.builtin.shell: |
-        curl -OL https://ziglang.org/download/0.10.1/zig-linux-x86_64-0.10.1.tar.xz
-        tar -C /usr/local -xvf zig-linux-x86_64-0.10.1.tar.xz
-        rm zig-linux-x86_64-0.10.1.tar.xz
-      args:
-        creates: "/usr/local/zig"
-    # Modify ~/.zshrc to add environment variables for programming languages
-    - name: Update ~/.zshrc with paths for Go, Zig, and Rust
-      ansible.builtin.lineinfile:
-        path: "/home/hayley/.zshrc"
-        line: 'export PATH=$PATH:/usr/local/go/bin:/usr/local/zig:/home/hayley/.cargo/bin'
-        create: true
-        state: present
-    # Reload Zsh configuration to apply the changes
-    - name: Reload Zsh configuration
-      ansible.builtin.shell: |
-        source /home/hayley/.zshrc
-      become_user: hayley
-    # Verify Rust installation
-    - name: Verify Rust version
-      ansible.builtin.shell: rustc --version
-      register: rust_version
-    - name: Display Rust version
-      ansible.builtin.debug:
-        msg: "Rust version is {{ rust_version.stdout }}"
-    # Verify Go installation
-    - name: Verify Go version
-      ansible.builtin.shell: go version
-      register: go_version
-    - name: Display Go version
-      ansible.builtin.debug:
-        msg: "Go version is {{ go_version.stdout }}"
-    # Verify Zig installation
-    - name: Verify Zig version
-      ansible.builtin.shell: zig version
-      register: zig_version
-    - name: Display Zig version
-      ansible.builtin.debug:
-        msg: "Zig version is {{ zig_version.stdout }}"
+# Install dependencies for all programming languages
+- name: Install required dependencies
+  ansible.builtin.apt:
+    name:
+      - curl
+      - build-essential
+      - git
+      - openjdk-11-jdk
+      - nasm
+    state: present
+# Install Rust using rustup
+- name: Install Rust
+  ansible.builtin.shell: |
+    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+  args:
+    creates: "/home/hayley/.cargo"
+# Install Java (OpenJDK 11)
+- name: Install Java (OpenJDK 11)
+  ansible.builtin.apt:
+    name: openjdk-11-jdk
+    state: present
+# Install C and C++ compilers (GCC, G++)
+- name: Install GCC and G++
+  ansible.builtin.apt:
+    name:
+      - gcc
+      - g++
+    state: present
+# Install NASM assembler
+- name: Install NASM
+  ansible.builtin.apt:
+    name: nasm
+    state: present
+# Install Go programming language
+- name: Install Go
+  ansible.builtin.shell: |
+    curl -OL https://golang.org/dl/go1.20.5.linux-amd64.tar.gz
+    tar -C /usr/local -xvzf go1.20.5.linux-amd64.tar.gz
+    rm go1.20.5.linux-amd64.tar.gz
+  args:
+    creates: "/usr/local/go"
+# Install Zig programming language
+- name: Install Zig
+  ansible.builtin.shell: |
+    curl -OL https://ziglang.org/download/0.10.1/zig-linux-x86_64-0.10.1.tar.xz
+    tar -C /usr/local -xvf zig-linux-x86_64-0.10.1.tar.xz
+    rm zig-linux-x86_64-0.10.1.tar.xz
+  args:
+    creates: "/usr/local/zig"
+# Modify ~/.zshrc to add environment variables for programming languages
+- name: Update ~/.zshrc with paths for Go, Zig, and Rust
+  ansible.builtin.lineinfile:
+    path: "/home/hayley/.zshrc"
+    line: "export PATH=$PATH:/usr/local/go/bin:/usr/local/zig:/home/hayley/.cargo/bin"
+    create: true
+    state: present
+# Reload Zsh configuration to apply the changes
+- name: Reload Zsh configuration
+  ansible.builtin.shell: |
+    source /home/hayley/.zshrc
+  become_user: hayley
+# Verify Rust installation
+- name: Verify Rust version
+  ansible.builtin.shell: rustc --version
+  register: rust_version
+- name: Display Rust version
+  ansible.builtin.debug:
+    msg: "Rust version is {{ rust_version.stdout }}"
+# Verify Go installation
+- name: Verify Go version
+  ansible.builtin.shell: go version
+  register: go_version
+- name: Display Go version
+  ansible.builtin.debug:
+    msg: "Go version is {{ go_version.stdout }}"
+# Verify Zig installation
+- name: Verify Zig version
+  ansible.builtin.shell: zig version
+  register: zig_version
+- name: Display Zig version
+  ansible.builtin.debug:
+    msg: "Zig version is {{ zig_version.stdout }}"

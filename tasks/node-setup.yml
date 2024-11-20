@@ -1,54 +1,54 @@
 ---
-    # Install required dependencies for NVM
-    - name: Install dependencies for NVM
-      ansible.builtin.apt:
-        name:
-          - curl
-          - build-essential
-          - libssl-dev
-        state: present
-    # Install NVM (Node Version Manager)
-    - name: Install NVM (Node Version Manager)
-      ansible.builtin.shell: |
-        curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.0/install.sh | bash
-      args:
-        creates: "/home/hayley/.nvm" # Ensure that NVM is only installed if it's not already present
-    # Source NVM script to make NVM commands available in the current shell session and install Node.js
-    # Set NVM directory to the home directory
-    # Source the NVM script to enable NVM commands
-    # Install Node.js version 23 using NVM
-    # Switch to Node.js version 23
-    # Set Node.js version 23 as the default version
-    - name: Source NVM script
-      ansible.builtin.shell: |
-        export NVM_DIR="/home/hayley/.nvm"
-        [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-        nvm install 23
-        nvm use 23
-        nvm alias default 23
-      environment:
-        HOME: "/home/hayley" # Make sure the HOME environment variable is correctly set
-      register: nvm_install # Register the output of this task to verify it later
-    # Verify the installed Node.js version
-    # Set NVM directory to the home directory
-    - name: Verify Node.js version
-      ansible.builtin.shell: |
-        export NVM_DIR="/home/hayley/.nvm"
-        [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-        node -v
-      register: node_version
-    # Display the installed Node.js version in the Ansible output
-    - name: Display Node.js version
-      ansible.builtin.debug:
-        msg: "Node.js version is {{ node_version.stdout }}"
-    # Verify the installed npm version
-    - name: Verify npm version
-      ansible.builtin.shell: |
-        export NVM_DIR="/home/hayley/.nvm"
-        [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-        npm -v
-      register: npm_version
-    # Display the installed npm version in the Ansible output
-    - name: Display npm version
-      ansible.builtin.debug:
-        msg: "npm version is {{ npm_version.stdout }}"
+# Install required dependencies for NVM
+- name: Install dependencies for NVM
+  ansible.builtin.apt:
+    name:
+      - curl
+      - build-essential
+      - libssl-dev
+    state: present
+# Install NVM (Node Version Manager)
+- name: Install NVM (Node Version Manager)
+  ansible.builtin.shell: |
+    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.0/install.sh | bash
+  args:
+    creates: "/home/hayley/.nvm" # Ensure that NVM is only installed if it's not already present
+# Source NVM script to make NVM commands available in the current shell session and install Node.js
+# Set NVM directory to the home directory
+# Source the NVM script to enable NVM commands
+# Install Node.js version 23 using NVM
+# Switch to Node.js version 23
+# Set Node.js version 23 as the default version
+- name: Source NVM script
+  ansible.builtin.shell: |
+    export NVM_DIR="/home/hayley/.nvm"
+    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+    nvm install 23
+    nvm use 23
+    nvm alias default 23
+  environment:
+    HOME: "/home/hayley" # Make sure the HOME environment variable is correctly set
+  register: nvm_install # Register the output of this task to verify it later
+# Verify the installed Node.js version
+# Set NVM directory to the home directory
+- name: Verify Node.js version
+  ansible.builtin.shell: |
+    export NVM_DIR="/home/hayley/.nvm"
+    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+    node -v
+  register: node_version
+# Display the installed Node.js version in the Ansible output
+- name: Display Node.js version
+  ansible.builtin.debug:
+    msg: "Node.js version is {{ node_version.stdout }}"
+# Verify the installed npm version
+- name: Verify npm version
+  ansible.builtin.shell: |
+    export NVM_DIR="/home/hayley/.nvm"
+    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+    npm -v
+  register: npm_version
+# Display the installed npm version in the Ansible output
+- name: Display npm version
+  ansible.builtin.debug:
+    msg: "npm version is {{ npm_version.stdout }}"
