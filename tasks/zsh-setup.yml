@@ -28,11 +28,11 @@
     update: true
 - name: Ensure .zshrc exists
   file:
-    path: "~/.zshrc"
+    path: "{{ ansible_user_dir }}/.zshrc"
     state: touch
 - name: Update .zshrc to include autosuggestions
   lineinfile:
-    path: ~/.zshrc
+    path: "{{ ansible_user_dir }}/.zshrc"
     regexp: "^plugins="
     line: "plugins=(git zsh-autosuggestions)"
     backrefs: true
@@ -45,4 +45,4 @@
     unzip FiraCode.zip
     fc-cache -fv
   args:
-    creates: "~/.local/share/fonts/FiraCode Nerd Font.ttf" # Skip if already downloaded
+    creates: "{{ ansible_user_dir }}/.local/share/fonts/FiraCode Nerd Font.ttf" # Skip if already downloaded
