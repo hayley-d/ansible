@@ -26,16 +26,16 @@
     repo: "https://github.com/zsh-users/zsh-autosuggestions.git"
     dest: "~/.oh-my-zsh/plugins/zsh-autosuggestions"
     update: true
-- name: Ensure .zshrc exists
-  file:
-    path: "{{ ansible_user_dir }}/.zshrc"
-    state: touch
-- name: Update .zshrc to include autosuggestions
-  lineinfile:
-    path: "{{ ansible_user_dir }}/.zshrc"
-    regexp: "^plugins="
-    line: "plugins=(git zsh-autosuggestions)"
-    backrefs: true
+#- name: Ensure .zshrc exists
+#  file:
+#    path: "{{ ansible_user_dir }}/.zshrc"
+#    state: touch
+#- name: Update .zshrc to include autosuggestions
+#  lineinfile:
+#    path: "{{ ansible_user_dir }}/.zshrc"
+#    regexp: "^plugins="
+#    line: "plugins=(git zsh-autosuggestions)"
+#    backrefs: true
 # Install Nerd Fonts
 - name: Download and install Nerd Fonts
   shell: |
