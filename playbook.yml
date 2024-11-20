@@ -1,0 +1,14 @@
+---
+- name: Main Playbook for System Setup
+  hosts: localhost
+  become: true
+  tasks:
+    - name: Include Zsh Setup Tasks
+      include_tasks: ./tasks/zsh-setup.yml
+    - name: Include Docker Setup Tasks
+      include_tasks: ./tasks/docker-setup.yml
+    - name: Include Language Setup Tasks
+      include_tasks: ./tasks/language-setup.yml
+    - name: Include Node Setup Tasks
+      include_tasks: ./tasks/node-setup.yml
+
