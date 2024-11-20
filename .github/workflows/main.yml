@@ -48,19 +48,5 @@ jobs:
        # Step 6: Test task files (Dry Run) with `zsh-setup.yml` first
       - name: Test task files in a playbook context
         run: |
-          echo '---' > test-playbook.yml
-          echo '- hosts: localhost' >> test-playbook.yml
-          echo '  tasks:' >> test-playbook.yml
-          
-          # Ensure zsh-setup.yml is first
-          echo "  - include_tasks: ./tasks/zsh-setup.yml" >> test-playbook.yml
-          
-          # Dynamically include other task files (excluding zsh-setup.yml)
-          for file in ansible/tasks/*.yml; do
-            if [ "$file" != "./tasks/zsh-setup.yml" ]; then
-              echo "  - include_tasks: $file" >> test-playbook.yml
-            fi
-          done
-          
           # Test the playbook
-          ansible-playbook test-playbook.yml --check
+          ansible-playbook playbook.yml --check
