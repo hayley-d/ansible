@@ -11,7 +11,7 @@
   ansible.builtin.shell: |
     curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.0/install.sh | bash
   args:
-    creates: "/home/hayley/.nvm" # Ensure that NVM is only installed if it's not already present
+    creates: "{{ ansible_user_dir }}/.nvm" # Ensure that NVM is only installed if it's not already present
 # Source NVM script to make NVM commands available in the current shell session and install Node.js
 # Set NVM directory to the home directory
 # Source the NVM script to enable NVM commands
@@ -20,13 +20,13 @@
 # Set Node.js version 23 as the default version
 - name: Source NVM script
   ansible.builtin.shell: |
-    export NVM_DIR="/home/hayley/.nvm"
+    export NVM_DIR="{{ ansible_user_dir }}/.nvm"
     [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
     nvm install 23
     nvm use 23
     nvm alias default 23
   environment:
-    HOME: "/home/hayley" # Make sure the HOME environment variable is correctly set
+    HOME: "{{ ansible_user_dir }}" # Make sure the HOME environment variable is correctly set
   register: nvm_install # Register the output of this task to verify it later
 # Verify the installed Node.js version
 # Set NVM directory to the home directory
@@ -43,7 +43,7 @@
 # Verify the installed npm version
 - name: Verify npm version
   ansible.builtin.shell: |
-    export NVM_DIR="/home/hayley/.nvm"
+    export NVM_DIR="{{ ansible_user_dir }}/.nvm"
     [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
     npm -v
   register: npm_version
