@@ -1,4 +1,3 @@
----
 # Install required dependencies for NVM
 - name: Install dependencies for NVM
   ansible.builtin.apt:

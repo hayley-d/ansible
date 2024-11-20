@@ -1,4 +1,3 @@
----
 # Ensure the system is updated
 - name: Update apt cache and upgrade the system
   apt:

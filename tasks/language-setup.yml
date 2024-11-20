@@ -1,4 +1,3 @@
----
 # Install dependencies for all programming languages
 - name: Install required dependencies
   ansible.builtin.apt:
