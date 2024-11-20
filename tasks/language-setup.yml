@@ -1,3 +1,4 @@
+---
 - name: Install and configure programming languages (Rust, Java, C++, C, NASM, Go, Zig)
   hosts: localhost
   become: true

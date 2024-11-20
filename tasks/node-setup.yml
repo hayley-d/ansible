@@ -1,3 +1,4 @@
+---
 - name: Install NVM and the latest Node.js and npm using NVM
   hosts: localhost
   become: true

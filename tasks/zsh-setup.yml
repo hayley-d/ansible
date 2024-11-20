@@ -1,3 +1,4 @@
+---
 - name: Setup System for Zsh and Essential Configuration
   hosts: localhost
   become: true
