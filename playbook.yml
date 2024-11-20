@@ -5,6 +5,8 @@
   tasks:
     - name: Include Zsh Setup Tasks
       include_tasks: ./tasks/zsh-setup.yml
+      vars:
+        ansible_user_dir: "{{ lookup('env', 'HOME') }}"
     - name: Include Docker Setup Tasks
       include_tasks: ./tasks/docker-setup.yml
     - name: Include Language Setup Tasks
