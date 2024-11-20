@@ -1,8 +1,4 @@
 ---
-- name: Setup System for Zsh and Essential Configuration
-  hosts: localhost
-  become: true
-  tasks:
     # Ensure the system is updated
     - name: Update apt cache and upgrade the system
       apt:
